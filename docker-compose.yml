@@ -6,13 +6,24 @@ services:
   web:
     build: ./docker/web
     volumes:
-      - .:/var/www
+      - .:/app
+    ports:
+      - 4000:4000
 
   db:
     image: postgres
     volumes:
       - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=root  
 
+  dbadmin:
+    image: dpage/pgadmin4
+    ports:
+      - 80:80
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=user@domain.com
+      - PGADMIN_DEFAULT_PASSWORD=root 
 
 volumes:
   db_data: 
